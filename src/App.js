@@ -4,7 +4,8 @@ import axios from 'axios';
 import './App.css';
 import SearchEngine from './SearchEngine';
 
-const API ='https://demo8346836.mockable.io/cars';
+// const API ='https://demo8346836.mockable.io/cars';
+const API = `https://api.sandbox.amadeus.com/v1.2/flights/low-fare-search?apikey=7kGY2GI52CJxt2uUInBcxJRdxAM2pK6C&origin=BOS&destination=LON&departure_date=2018-12-22&return_date=2019-01-12&number_of_results=10`
 
 class App extends Component {
     constructor(props) {
@@ -29,11 +30,14 @@ class App extends Component {
         .then(response => this.setState({
             payload: response.data,
             isLoading: false
+
         }))
         .catch(error => this.setState({
             error,
             isLoading: false
         }))
+
+
     }
 
     componentWillMount() {}
@@ -42,44 +46,44 @@ class App extends Component {
     render(){
         const { payload, isLoading, error } = this.state;
 
-        const renderItens = () => {
-            const itensList = payload || [];
-            return itensList.map(item => (
-                <div>
-                    {item.portas}
-                    {item.passageiros}
-                    {item.portaMalas}
-                    {item.arCondicionado}
-                    {item.transmissao}
-                    {item.direcao}
-                    {item.vidroEletrico}
-                    {item.multimedia}
-                    {item.radio}
-                </div>
-            ))
-        }
+        // const renderItens = () => {
+        //     const itensList = payload || [];
+        //     return itensList.map(item => (
+        //         <div>
+        //             {item.portas}
+        //             {item.passageiros}
+        //             {item.portaMalas}
+        //             {item.arCondicionado}
+        //             {item.transmissao}
+        //             {item.direcao}
+        //             {item.vidroEletrico}
+        //             {item.multimedia}
+        //             {item.radio}
+        //         </div>
+        //     ))
+        // }
 
-        const renderCars = () => {
-            const carsList = payload || [];
+        // const renderCars = () => {
+        //     const carsList = payload || [];
 
-            return carsList.map(list => (
-                <article className="product">
-                    {list.titulo}
-                    {list.codigoTaxa}
-                    {list.urlImagem}
-                    {list.detalhes}
-                    {list.marcas}
-                    {list.valorTotal}
-                    {list.porcentagemDesconto}
-                    {list.porcentagemDesconto}
-                    {list.qtdParcelas}
-                    {list.marca}
-                    {list.favorito}
-                    {renderItens()}
-                    <button>Reservar</button>
-                </article>
-            ))
-        }
+        //     return carsList.map(list => (
+        //         <article className="product">
+        //             {list.titulo}
+        //             {list.codigoTaxa}
+        //             {list.urlImagem}
+        //             {list.detalhes}
+        //             {list.marcas}
+        //             {list.valorTotal}
+        //             {list.porcentagemDesconto}
+        //             {list.porcentagemDesconto}
+        //             {list.qtdParcelas}
+        //             {list.marca}
+        //             {list.favorito}
+        //             {renderItens()}
+        //             <button>Reservar</button>
+        //         </article>
+        //     ))
+        // }
 
         if (error) {
             return <div>{error.message}</div>;
@@ -92,7 +96,7 @@ class App extends Component {
         return (
             <section>
               <SearchEngine/>
-              {renderCars()}
+
             </section>
         );
     }
