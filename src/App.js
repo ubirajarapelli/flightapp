@@ -5,7 +5,7 @@ import './App.css';
 import SearchEngine from './SearchEngine';
 
 // const API ='https://demo8346836.mockable.io/cars';
-const API = `https://api.sandbox.amadeus.com/v1.2/flights/low-fare-search?apikey=7kGY2GI52CJxt2uUInBcxJRdxAM2pK6C&origin=BOS&destination=LON&departure_date=2018-12-22&return_date=2019-01-12&number_of_results=10`
+const API = `https://api.sandbox.amadeus.com/v1.2/flights/low-fare-search?apikey=${apiKey}&origin=BOS&destination=LON&departure_date=2018-12-22&return_date=2019-01-12&number_of_results=10`
 
 class App extends Component {
     constructor(props) {
