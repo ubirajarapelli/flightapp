@@ -9,6 +9,7 @@
 
 # othres
 package-lock.json
+apiKey.js
 
 # misc
 /.sass-cache
