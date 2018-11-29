@@ -1,89 +1,68 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import Axios from 'axios';
 
 import './App.css';
-import SearchEngine from './SearchEngine';
+import { ApiKey } from '../apiKey';
 
-// const API ='https://demo8346836.mockable.io/cars';
-const API = `https://api.sandbox.amadeus.com/v1.2/flights/low-fare-search?apikey=${apiKey}&origin=BOS&destination=LON&departure_date=2018-12-22&return_date=2019-01-12&number_of_results=10`
+import SearchEngine from './SearchEngine';
+import ListFlights from './ListFlights';
+
+const API = `https://api.sandbox.amadeus.com/v1.2/flights/low-fare-search?apikey=${ApiKey}`;
 
 class App extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            payload: [],
-            isLoading: false,
-            error: null,
+            origin: '',
+            destination: '',
+            departure_date: '',
+            return_date: '',
+            adults: '',
+            children: '',
+            nonstop: false,
+            travel_class: '',
+            flights: []
         }
+
+        this.handleChange = this.handleChange.bind(this)
+        this.handleSearch = this.handleSearch.bind(this)
     }
 
     componentDidCatch() {
         console.log('componentDidCatch');
     }
 
-    componentDidMount() {
-
-        this.setState({isLoading: true});
-
-        axios.get(API)
-        .then(response => this.setState({
-            payload: response.data,
-            isLoading: false
-
-        }))
-        .catch(error => this.setState({
-            error,
-            isLoading: false
-        }))
-
-
-    }
+    componentDidMount() {}
 
     componentWillMount() {}
 
+    handleChange(event) {
+        this.setState({[event.target.name]: event.target.value})
+    }
 
-    render(){
-        const { payload, isLoading, error } = this.state;
+    handleSearch() {
+        this.setState({isLoading: true});
 
-        // const renderItens = () => {
-        //     const itensList = payload || [];
-        //     return itensList.map(item => (
-        //         <div>
-        //             {item.portas}
-        //             {item.passageiros}
-        //             {item.portaMalas}
-        //             {item.arCondicionado}
-        //             {item.transmissao}
-        //             {item.direcao}
-        //             {item.vidroEletrico}
-        //             {item.multimedia}
-        //             {item.radio}
-        //         </div>
-        //     ))
-        // }
+        const origin = this.state.origin;
+        const destination = this.state.destination;
+        const departureDate = this.state.departure_date;
+        const returnDate = this.state.return_date;
+        const adults = this.state.adults;
+        const children = this.state.children;
+        const nonstop = this.state.nonstop;
+        const travelClass = this.state.travel_class;
 
-        // const renderCars = () => {
-        //     const carsList = payload || [];
+        Axios.get(`${API}&origin=${origin}&destination=${destination}&departure_date=${departureDate}&return_date=${returnDate}&number_of_results=10`)
+            .then(response => this.setState({
+                    flights: response.data,
+                    isLoading: false,
+                })
+            )        
+    }
 
-        //     return carsList.map(list => (
-        //         <article className="product">
-        //             {list.titulo}
-        //             {list.codigoTaxa}
-        //             {list.urlImagem}
-        //             {list.detalhes}
-        //             {list.marcas}
-        //             {list.valorTotal}
-        //             {list.porcentagemDesconto}
-        //             {list.porcentagemDesconto}
-        //             {list.qtdParcelas}
-        //             {list.marca}
-        //             {list.favorito}
-        //             {renderItens()}
-        //             <button>Reservar</button>
-        //         </article>
-        //     ))
-        // }
+    render() {
+        const { flights, isLoading, error } = this.state;
 
         if (error) {
             return <div>{error.message}</div>;
@@ -95,8 +74,18 @@ class App extends Component {
 
         return (
             <section>
-              <SearchEngine/>
+              <SearchEngine
+                origin={this.state.origin}
+                destination={this.state.destination}
+                departureDate={this.state.departure_date}
+                returnDate={this.state.return_date}
+                adults={this.state.adults}
+                children={this.state.children}
+                travelClass={this.state.travel_class}
 
+                handleChange={this.handleChange}
+                handleSearch={this.handleSearch}/>
+              <ListFlights flights={this.state.flights} />
             </section>
         );
     }
