@@ -1,29 +1,9 @@
 import React from 'react';
 import RoundTrip from './RoundTrip'
 
+import { dateTime, howTime } from './utils/dateTime'
+
 export default props => {
-
-    function dateTime(date) {
-        const convertDate = new Date(date)
-        .toLocaleString('pt-BR', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric'
-        })
-
-        return (<time dateTime={date}>{convertDate}</time>)
-    }
-
-    function howTime(date) {
-        const convertHours = new Date(date)
-        .toLocaleTimeString('pt-BR', {
-            hour: '2-digit',
-            minute: '2-digit',
-        })
-
-        return (<time datetime={date}>{convertHours}</time>)
-    }
-
     
     const results = props.flights.results || []
     
@@ -36,6 +16,7 @@ export default props => {
     const renderFlights = () => {
         return itineraries.map(item => (
             <section>
+                
                 {item.outbound.flights.map(fl =>
                 <form>
                     <header>

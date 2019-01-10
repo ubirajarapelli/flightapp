@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import Axios from 'axios';
 
 import './App.css';
-import { ApiKey } from '../apiKey';
+// import { ApiKey } from '../apiKey';
 
 import SearchEngine from './SearchEngine';
 import ListFlights from './ListFlights';
+
+const ApiKey = 'sHfYLnrgOe6XlxUo7zyDFv2SUSr59U2H';
+
 
 const API = `https://api.sandbox.amadeus.com/v1.2/flights/low-fare-search?apikey=${ApiKey}`;
 
